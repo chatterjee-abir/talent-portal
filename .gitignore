@@ -1,0 +1,21 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+node_modules/
+
+# Build output
+build/
+
+# Environment files
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+
+# Backend build
+talent-portal-backend2/target/
+
+# Maven wrapper (optional — keep if you want)
+# talent-portal-backend2/.mvn/
