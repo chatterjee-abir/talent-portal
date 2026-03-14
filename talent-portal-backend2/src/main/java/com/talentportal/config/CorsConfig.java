@@ -51,8 +51,10 @@ public class CorsConfig {
                     // Allow React running on either Vite (:5173) or CRA (:3000)
                     .allowedOrigins(
                         "http://localhost:3000",   // Create React App default port
-                        "http://localhost:5173"    // Vite default port
-                        // Phase 3 (Docker): also add "http://localhost:80"
+                        "http://localhost:5173",   // Vite default port
+                        "http://localhost:80",     // Phase 3 (Docker)
+                        "http://localhost"         // Phase 3 (Docker - port 80 default)
+                        
                         // Phase 4 (AWS):    replace with "http://YOUR_EC2_IP"
                         //                   or "https://your-domain.com"
                     )
