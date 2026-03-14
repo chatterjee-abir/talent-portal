@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: talent-portal-db
+    environment:
+      MYSQL_ROOT_PASSWORD: Toor123#@!
+      MYSQL_DATABASE: talent_portal
+      MYSQL_USER: talentuser
+      MYSQL_PASSWORD: talentpass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./talent-portal-backend2/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./talent-portal-backend2/src/main/resources/data.sql:/docker-entrypoint-initdb.d/02-data.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+
+
+
+
+
+  backend:
+    build: ./talent-portal-backend2
+    container_name: talent-portal-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/talent_portal?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: talentuser
+      SPRING_DATASOURCE_PASSWORD: talentpass
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  frontend:
+    build: .
+    container_name: talent-portal-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
