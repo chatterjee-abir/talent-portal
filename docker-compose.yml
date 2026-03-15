@@ -5,6 +5,7 @@ services:
   mysql:
     image: mysql:8.0
     container_name: talent-portal-db
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: Toor123#@!
       MYSQL_DATABASE: talent_portal
@@ -31,6 +32,7 @@ services:
   backend:
     build: ./talent-portal-backend2
     container_name: talent-portal-backend
+    restart: unless-stopped
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/talent_portal?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: talentuser
@@ -44,6 +46,7 @@ services:
   frontend:
     build: .
     container_name: talent-portal-frontend
+    restart: unless-stopped
     ports:
       - "80:80"
     depends_on:
